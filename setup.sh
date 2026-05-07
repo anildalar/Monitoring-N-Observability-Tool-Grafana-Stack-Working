@@ -57,6 +57,7 @@ if ! k3d cluster list | grep -q observability; then
   k3d cluster create observability \
     -s 1 -a 2 \
     --k3s-arg "--disable=traefik@server:0" \
+    -p "30000-32767:30000-32767@server:0"
     -p "80:80@loadbalancer" \
     -p "443:443@loadbalancer"
 fi
