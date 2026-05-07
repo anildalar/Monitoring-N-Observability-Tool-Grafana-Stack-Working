@@ -1,0 +1,114 @@
+WSL
+Setup a complete monitoring & observability tool using Grafana Stack using yaml in k3d. Don't use Helm
+
+Grafana (GUI/ UI)
+Prometheus (TSDB)
+NodeExporter (Agent) Resources(RAM/CPU/SSD/Bandwidth) Monitori
+Loki  (Logging Service)
+Promtail (Agent) Pod/WN logs monitor
+OpenTelemetry   (Telemetry)
+Tempo  ( Tracing service)
+
+Simulate 100% Fake CPU load and test E2D.
+Alert/Notification Should go to Slack/Email.
+
+
+
+Silent Agent
+	1. NodeExporter
+	2. PromTail
+
+Complete Observability Flow
+METRICS:
+	Prometheus ← Node Exporter
+
+LOGS:
+	Promtail → Loki(UI)
+
+TRACES:
+	OTel Collector → Tempo
+
+Compare With Loki
+Stack				Communication
+Prometheus ← NodeExporter	Pull
+Promtail   → Loki		Push
+
+Kubernetes Deployment Pattern
+
+Component		Usually Runs As	
+Node Exporter(Agent)	DaemonSet		   /metrics
+Promtail(Agent)		DaemonSet
+Prometheus(store)	Deployment/StatefulSet		
+Loki(store)		StatefulSet		http://loki:3100/loki/api/v1/push
+Tempo(store)		StatefulSet
+
+
+
+http://loki:3100/loki/api/v1/push
+protocol://hostname:portno/routeName
+
+
+
+loki-service.yaml
+
+metadata:
+	name: loki
+
+apply
+
+kubectl apply -k base
+
+The main difference is:
+
+kubectl apply -f → apply raw Kubernetes manifests directly
+kubectl apply -k → apply manifests processed by Kustomize
+
+
+kubectl kustomize overlays/dev
+kubectl apply -k overlays/dev
+
+
+kubectl apply -k overlays/dev
+kubectl apply -k base
+
+Kustomize:
+
+reads base
+applies patches
+generates final YAML
+kubectl applies result
+
+
+kubectl kustomize base
+kubectl kustomize base
+
+
+
+
+Recommended Enterprise Setup
+For learning real observability architecture:
+C:\Windows\System32\drivers\etc
+
+127.0.0.1 grafana.oklabs.in
+127.0.0.1 prometheus.oklabs.in
+127.0.0.1 alertmanager.oklabs.in
+127.0.0.1 loki.oklabs.in
+127.0.0.1 tempo.oklabs.in
+
+
+http://loki.oklabs.in/ready
+http://loki.oklabs.in/loki/api/v1/labels
+
+http://tempo.oklabs.in/ready
+
+
+
+
+
+
+127.0.0.1 grafana.oklabs.in
+127.0.0.1 prometheus.oklabs.in
+127.0.0.1 alertmanager.oklabs.in
+127.0.0.1 loki.oklabs.in
+127.0.0.1 tempo.oklabs.in
+
