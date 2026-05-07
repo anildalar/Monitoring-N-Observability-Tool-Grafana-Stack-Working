@@ -1,0 +1,38 @@
+namespace: monitoring
+
+resources:
+
+# Grafana
+- grafana/deployment.yaml
+- grafana/service.yaml
+
+# Prometheus
+- prometheus/config.yaml
+- prometheus/alerts.yaml
+- prometheus/deployment.yaml
+- prometheus/service.yaml
+
+# Loki
+- loki/config.yaml
+- loki/deployment.yaml
+- loki/service.yaml
+
+# Promtail
+- promtail/config.yaml
+- promtail/daemonset.yaml
+
+# Tempo
+- tempo/config.yaml
+- tempo/deployment.yaml
+- tempo/service.yaml
+
+# OpenTelemetry
+- otel/config.yaml
+- otel/deployment.yaml
+
+# Alertmanager
+- alertmanager/config.yaml
+- alertmanager/deployment.yaml
+
+# Node Exporter
+- node-exporter/daemonset.yaml
